@@ -43,7 +43,24 @@ class _HomePageState extends State<HomePage> {
   }
 
   Widget _userInfo() {
-    return SizedBox();
+    return SizedBox(
+      width: MediaQuery.of(context).size.width,
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        mainAxisSize: MainAxisSize.max,
+        children: [
+          Container(
+            height: 100,
+            width: 100,
+            decoration: BoxDecoration(
+                image: DecorationImage(image: NetworkImage(_user!.photoURL!))),
+          ),
+          Text(_user!.email!),
+          Text(_user!.displayName!),
+        ],
+      ),
+    );
   }
 
   void _handleGoogleSignIn() {
