@@ -1,0 +1,126 @@
+{
+  "project_info": {
+    "project_number": "1081233069513",
+    "project_id": "gauth-test-96dd8",
+    "storage_bucket": "gauth-test-96dd8.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1081233069513:android:b6469c993ee808dc2f8418",
+        "android_client_info": {
+          "package_name": "com.pookiedex.app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1081233069513-qcnhorg9jp6fnask4b44urv3p4o5n42c.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBYDL7wrd7T53gfmWQxRdUoPdg-2gsZcc8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1081233069513-qcnhorg9jp6fnask4b44urv3p4o5n42c.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "1081233069513-r4d8vcultn7vvl9ddtqr3cq750kg976i.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.pookiedex.app"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1081233069513:android:b8f8f2f6b8ac638e2f8418",
+        "android_client_info": {
+          "package_name": "com.pookiedex.com"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1081233069513-qcnhorg9jp6fnask4b44urv3p4o5n42c.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBYDL7wrd7T53gfmWQxRdUoPdg-2gsZcc8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1081233069513-qcnhorg9jp6fnask4b44urv3p4o5n42c.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "1081233069513-r4d8vcultn7vvl9ddtqr3cq750kg976i.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.pookiedex.app"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1081233069513:android:26b6a7866a133fe12f8418",
+        "android_client_info": {
+          "package_name": "haha.haha.haha"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1081233069513-07ecmqoh46es0gs2ua3fpvu0c15ehstt.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "haha.haha.haha",
+            "certificate_hash": "73cd7b241e6a80c97484a9f87f0056b488edd8f5"
+          }
+        },
+        {
+          "client_id": "1081233069513-qcnhorg9jp6fnask4b44urv3p4o5n42c.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBYDL7wrd7T53gfmWQxRdUoPdg-2gsZcc8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1081233069513-qcnhorg9jp6fnask4b44urv3p4o5n42c.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "1081233069513-r4d8vcultn7vvl9ddtqr3cq750kg976i.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.pookiedex.app"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
