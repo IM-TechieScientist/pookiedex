@@ -15,6 +15,7 @@ dependencies:
   path: ^1.8.0
   firebase_core: ^3.5.0
   firebase_analytics: ^11.3.2
+  firebase_auth: ^5.3.0
   sign_in_button: ^3.2.0
 
 dev_dependencies:
