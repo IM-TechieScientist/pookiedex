@@ -32,6 +32,10 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       home: HomePage(),
+      debugShowCheckedModeBanner: false,
+      theme: ThemeData(
+        scaffoldBackgroundColor: Color.fromARGB(255, 243, 157, 157),
+      ),
     );
   }
 }
@@ -43,7 +47,7 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   int _selectedIndex = 0;
-  String qrData = "Sample QR Data from App State";
+  String qrData = "notSetup";
 
   final List<Widget> _pages = [];
 
@@ -56,6 +60,8 @@ class _HomePageState extends State<HomePage> {
       SetupPage(onGenerateQR: (data) {
         setState(() {
           qrData = data;
+          // Refresh the ConnectPage with the new QR data
+          _pages[1] = ConnectPage(qrData: qrData);
         });
       }),
     ]);
@@ -66,6 +72,7 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
       body: _pages[_selectedIndex],
       bottomNavigationBar: BottomNavigationBar(
+        backgroundColor: Color.fromARGB(255, 207, 85, 85),
         currentIndex: _selectedIndex,
         onTap: (index) {
           setState(() {
@@ -86,7 +93,10 @@ class FriendsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text("Friends")),
+      appBar: AppBar(
+        title: Text("Friends"),
+        backgroundColor: Color.fromARGB(255, 207, 85, 85),
+      ),
       body: Center(
         child: Text("List of Friends will be shown here"),
       ),
@@ -102,27 +112,33 @@ class ConnectPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text("Connect")),
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          QrImageView(
-            data: qrData,
-            size: 200,
-            backgroundColor: Colors.white,
-          ),
-          ElevatedButton(
-            onPressed: () async {
-              String scanResult = await FlutterBarcodeScanner.scanBarcode(
-                  "#ff6666", "Cancel", true, ScanMode.QR);
-              if (scanResult != '-1') {
-                // Here you'd handle the QR scan result (parse and store it)
-                print(scanResult);
-              }
-            },
-            child: Text("Scan QR Code"),
-          ),
-        ],
+      appBar: AppBar(
+        title: Text("Connect"),
+        backgroundColor: Color.fromARGB(255, 207, 85, 85),
+      ),
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            ElevatedButton(
+              onPressed: () async {
+                String scanResult = await FlutterBarcodeScanner.scanBarcode(
+                    "#ff6666", "Cancel", true, ScanMode.QR);
+                if (scanResult != '-1') {
+                  // Here you'd handle the QR scan result (parse and store it)
+                  print(scanResult);
+                }
+              },
+              child: Text("Scan QR Code"),
+            ),
+            SizedBox(height: 20),
+            QrImageView(
+              data: qrData.isNotEmpty ? qrData : "No QR data available",
+              size: 200,
+              backgroundColor: Colors.white,
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -145,7 +161,10 @@ class _SetupPageState extends State<SetupPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text("Setup")),
+      appBar: AppBar(
+        title: Text("Setup"),
+        backgroundColor: Color.fromARGB(255, 207, 85, 85),
+      ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
@@ -165,39 +184,15 @@ class _SetupPageState extends State<SetupPage> {
             SizedBox(height: 20),
             ElevatedButton(
               onPressed: () {
+                FocusScope.of(context).unfocus();
                 String qrData =
                     "${_nameController.text},${_regController.text},${_instaController.text}";
                 widget.onGenerateQR(qrData);
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => QRCodeDisplayPage(qrData: qrData),
-                  ),
-                );
+                ConnectPage(qrData: qrData);
               },
-              child: Text("Generate QR"),
+              child: Text("Save Data"),
             ),
           ],
-        ),
-      ),
-    );
-  }
-}
-
-class QRCodeDisplayPage extends StatelessWidget {
-  final String qrData;
-
-  QRCodeDisplayPage({required this.qrData});
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: Text("Your QR Code")),
-      body: Center(
-        child: QrImageView(
-          data: qrData,
-          size: 200,
-          backgroundColor: Colors.white,
         ),
       ),
     );
