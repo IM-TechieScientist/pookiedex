@@ -26,7 +26,7 @@ class _ConnectPageState extends State<ConnectPage> {
     return Scaffold(
       appBar: AppBar(
         title: Text("Connect"),
-        backgroundColor: Color.fromARGB(255, 207, 85, 85),
+        // backgroundColor: Color.fromARGB(255, 207, 85, 85),
       ),
       body: Center(
         child: Column(

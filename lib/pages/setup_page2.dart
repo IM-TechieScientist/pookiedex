@@ -27,7 +27,7 @@ class _SetupPageState extends State<SetupPage> {
     return Scaffold(
       appBar: AppBar(
         title: Text("Setup"),
-        backgroundColor: Color.fromARGB(255, 207, 85, 85),
+        // backgroundColor: Color.fromARGB(255, 207, 85, 85),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),

@@ -7,6 +7,8 @@ import 'package:pookiedex_connect/pages/setup_page1.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:io';
 import 'package:pookiedex_connect/database_helper.dart';
+import 'package:pookiedex_connect/theme.dart';
+import 'package:flex_color_scheme/flex_color_scheme.dart';
 void main() {
   runApp(MyApp());
 }
@@ -33,8 +35,9 @@ class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       title: 'Conditional Navigation App',
-      theme: ThemeData(primarySwatch: Colors.blue),
+      theme: FlexThemeData.dark(scheme: FlexScheme.deepOrangeM3),
       home: FutureBuilder<bool>(
         future: _checkSetupStatus(),
         builder: (context, snapshot) {
