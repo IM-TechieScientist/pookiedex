@@ -65,8 +65,18 @@ class _HomePageState extends State<HomePage> {
 
   void _handleGoogleSignIn() {
     try {
-      GoogleAuthProvider _googleAuthProvider = GoogleAuthProvider();
-      _auth.signInWithProvider(_googleAuthProvider);
+      GoogleAuthProvider googleAuthProviderer = GoogleAuthProvider();
+      _auth.signInWithProvider(googleAuthProviderer);
+      /*
+      String abc = _user!.email!;
+      String _check = "vitstudent.ac.in"
+
+      if(abc.contains(_check)){
+        print("allclear")
+      }else{
+        _auth.signOut();
+      }
+      */
     } catch (error) {
       print(error);
     }
