@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:path/path.dart';
 import 'package:pookiedex_connect/pages/setup_page2.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:sign_in_button/sign_in_button.dart';
@@ -18,79 +17,12 @@ class _SetupPage1State extends State<SetupPage1> {
   bool _isAuthorized = false; // has granted permissions?
   final TextEditingController _controller = TextEditingController();
   static const List<String> scopes = <String>[
-  'email',
-];
+    'email',
+  ];
 
-final GoogleSignIn _googleSignIn = GoogleSignIn(
-  // Optional clientId
-  // clientId: 'your-client_id.apps.googleusercontent.com',
-  scopes: scopes,
-);
-
-  Widget _googleSignInButton() {
-    return Center(
-        child: SizedBox(
-            height: 50,
-            child: SignInButton(Buttons.google,
-                text: "Sign In With Google", onPressed: _handleSignIn)));
-  }
-
-  Widget _userInfo() {
-    return SizedBox(
-      width: MediaQuery.of(context).size.width,
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        mainAxisSize: MainAxisSize.max,
-        children: [
-          Container(
-            height: 100,
-            width: 100,
-            decoration: BoxDecoration(
-                image: DecorationImage(image: NetworkImage(_user!.photoURL!))),
-          ),
-          Text(_user!.email!),
-          Text(_user!.displayName!),
-        ],
-      ),
-    );
-  }
-Future<void> _handleSignIn() async {
-  try {
-    GoogleSignInAccount? _currentUser = await _googleSignIn.signIn();
-    String email= _currentUser!.email;
-    print(email);
-    //[a-zA-]@vitstudent.ac.in
-
-    String checker = "@vitstudent.ac.in";
-
-    if(email.contains(checker)==false){
-      _auth.signOut();
-    }else{
-      _navigateToSetupPage2();
-    }
-  } catch (error) {
-    print(error);
-  }
-
-}
-  // void _handleGoogleSignIn() {
-  //   try {
-  //     GoogleAuthProvider _googleAuthProvider = GoogleAuthProvider();
-  //     _auth.signInWithProvider(_googleAuthProvider);
-  //   } catch (error) {
-  //     print(error);
-  //   }
-  // }
-  void _navigateToSetupPage2() {
-    setState(() {
-      emailID = _controller.text;
-    });
-    Navigator.push(
-      context,
-      MaterialPageRoute(builder: (context) => SetupPage(emailID: emailID)),
-    );
-  }
+  final GoogleSignIn _googleSignIn = GoogleSignIn(
+    scopes: scopes,
+  );
 
   @override
   void initState() {
@@ -100,6 +32,81 @@ Future<void> _handleSignIn() async {
         _user = event;
       });
     });
+  }
+
+  Widget _googleSignInButton() {
+    return Center(
+      child: SizedBox(
+        height: 50,
+        child: SignInButton(
+          Buttons.google,
+          text: "Sign In With Google",
+          onPressed: _handleSignIn,
+        ),
+      ),
+    );
+  }
+
+  Widget _userInfo() {
+    if (_user == null) return SizedBox();
+    return SizedBox(
+      width: MediaQuery.of(context).size.width,
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        mainAxisSize: MainAxisSize.max,
+        children: [
+          if (_user!.photoURL != null)
+            Container(
+              height: 100,
+              width: 100,
+              decoration: BoxDecoration(
+                image: DecorationImage(
+                  image: NetworkImage(_user!.photoURL!),
+                ),
+              ),
+            ),
+          if (_user!.email != null) Text(_user!.email!),
+          if (_user!.displayName != null) Text(_user!.displayName!),
+        ],
+      ),
+    );
+  }
+
+  Future<void> _handleSignIn() async {
+    try {
+      GoogleSignInAccount? _currentUser = await _googleSignIn.signIn();
+      if (_currentUser != null) {
+        String email = _currentUser.email;
+        print(email);
+
+        // Only allow email from @vitstudent.ac.in domain
+        String checker = "@vitstudent.ac.in";
+        if (!email.contains(checker)) {
+          _auth.signOut();
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(content: Text("Please use a valid VIT email")),
+          );
+        } else {
+          _navigateToSetupPage2();
+        }
+      }
+    } catch (error) {
+      print(error);
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text("Sign in failed: $error")),
+      );
+    }
+  }
+
+  void _navigateToSetupPage2() {
+    setState(() {
+      emailID = _controller.text;
+    });
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => SetupPage(emailID: emailID)),
+    );
   }
 
   @override
@@ -123,8 +130,8 @@ Future<void> _handleSignIn() async {
               onPressed: _navigateToSetupPage2,
               child: Text('Next'),
             ),
+            SizedBox(height: 20),
             _user != null ? _userInfo() : _googleSignInButton(),
-
           ],
         ),
       ),
