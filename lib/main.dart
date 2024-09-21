@@ -43,7 +43,7 @@ class _MyAppState extends State<MyApp> {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'PookieDex',
-      theme: FlexThemeData.dark(scheme: FlexScheme.deepOrangeM3),
+      theme: FlexThemeData.dark(scheme: FlexScheme.indigo),
       home: FutureBuilder<bool>(
         future: _checkSetupStatus(),
         builder: (context, snapshot) {

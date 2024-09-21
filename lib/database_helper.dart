@@ -61,6 +61,7 @@ class DatabaseHelper {
         name TEXT,
         reg_number TEXT,
         insta_id TEXT,
+        bio TEXT,
         email TEXT
       )
     ''');
@@ -71,6 +72,8 @@ class DatabaseHelper {
         'name': 'Rahul',
         'reg_number': '2XXXXXXXX',
         'insta_id': 'goated',
+        'bio':'You will never know the lore',
+        'email':'smt@example.com'
       },
       conflictAlgorithm: ConflictAlgorithm.replace,
     );
@@ -81,6 +84,8 @@ class DatabaseHelper {
         'name': 'Emily',
         'reg_number': '2XXXXXXXX',
         'insta_id': 'goated',
+        'bio':'You will never know the lore',
+        'email':'smt@example.com'
       },
       conflictAlgorithm: ConflictAlgorithm.replace,
     );
@@ -99,7 +104,7 @@ class DatabaseHelper {
   //     conflictAlgorithm: ConflictAlgorithm.replace,
   //   );
   // }
-    Future<void> insertQRData(String name, String regNumber, String instaID, String emailID) async {
+    Future<void> insertQRData(String name, String regNumber, String instaID, String bio,String emailID) async {
     final db = await database;
       try {
     await db.insert(
@@ -108,6 +113,7 @@ class DatabaseHelper {
         'name': name,
         'reg_number': regNumber,
         'insta_id': instaID,
+        'bio':bio,
         'email': emailID,
       },
       conflictAlgorithm: ConflictAlgorithm.replace, // Replaces existing entry if same email exists

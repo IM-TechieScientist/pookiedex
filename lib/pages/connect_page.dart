@@ -30,9 +30,10 @@ class _ConnectPageState extends State<ConnectPage> {
       String name = userDoc.get('name');
       String regNumber = userDoc.get('registration_number');
       String instaID = userDoc.get('instaID');
+      String bio=userDoc.get("bio");
 
       // Save these details to SQLite
-      await DatabaseHelper().insertQRData(name, regNumber, instaID,widget.qrData);
+      await DatabaseHelper().insertQRData(name, regNumber, instaID,bio,widget.qrData);
 
       print("User Data saved locally: Name: $name, Reg Number: $regNumber, InstaID: $instaID");
                 // Optionally, show a confirmation message
