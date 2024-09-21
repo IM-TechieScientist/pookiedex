@@ -6,6 +6,7 @@ import 'dart:io';
 import 'package:path_provider/path_provider.dart';
 import 'package:pookiedex_connect/database_helper.dart';
 import 'package:sqflite/sqflite.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class SetupPage extends StatefulWidget {
   final String emailID;
@@ -53,17 +54,20 @@ class _SetupPageState extends State<SetupPage> {
                 String qrData =
                     "${_nameController.text},${_regController.text},${_instaController.text}";
                 setState(() {
-                  qrData="${_nameController.text},${_regController.text},${_instaController.text}";
-
+                  qrData =
+                      "${_nameController.text},${_regController.text},${_instaController.text}";
                 });
-                  DatabaseHelper dbHelper = DatabaseHelper();
-                  if (await dbHelper.isSetupComplete() == true){
-                  dbHelper.updateQRData(_nameController.text, _regController.text, _instaController.text);
-                  } else{
-                  dbHelper.insertQRData(_nameController.text, _regController.text, _instaController.text);
+                DatabaseHelper dbHelper = DatabaseHelper();
+                if (await dbHelper.isSetupComplete() == true) {
+                  dbHelper.updateQRData(_nameController.text,
+                      _regController.text, _instaController.text);
+                } else {
+                  dbHelper.insertQRData(_nameController.text,
+                      _regController.text, _instaController.text);
 
                   // Mark the setup as complete
-                  dbHelper.setSetupComplete(true);}
+                  dbHelper.setSetupComplete(true);
+                }
                 // DatabaseHelper dbHelper = DatabaseHelper();
                 // dbHelper.insertQRData(_nameController.text,_regController.text,_instaController.text);
                 // Navigator.pushReplacement(
@@ -73,11 +77,24 @@ class _SetupPageState extends State<SetupPage> {
                 //   ),
                 // );
                 Navigator.push(
-      context,
-      MaterialPageRoute(builder: (context) => HomePage(qrData: qrData,)),
-    );
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => HomePage(
+                            qrData: qrData,
+                          )),
+                );
                 // widget.onGenerateQR(qrData);
                 ConnectPage(qrData: qrData);
+                final db = FirebaseFirestore.instance;
+                final user = <String, dynamic>{
+                  "name": _nameController.text,
+                  "regno": _regController.text,
+                  "insta": _instaController.text
+                };
+
+// Add a new document with a generated ID
+                db.collection("users").add(user).then((DocumentReference doc) =>
+                    print('DocumentSnapshot added with ID: ${doc.id}'));
               },
               child: Text("Save Data"),
             ),
@@ -85,18 +102,18 @@ class _SetupPageState extends State<SetupPage> {
         ),
       ),
     );
-  
-  // Future<void> _completeSetup() async {
-  // SharedPreferences prefs = await SharedPreferences.getInstance();
-  // await prefs.setBool('isSetupComplete', true);
 
-  // Future<void> _saveQRData(String qrData) async {
-  //   final directory = await getApplicationDocumentsDirectory();
-  //   final file = File('${directory.path}/qrdata.txt');
-  //   await file.writeAsString(qrData);
-  // }
+    // Future<void> _completeSetup() async {
+    // SharedPreferences prefs = await SharedPreferences.getInstance();
+    // await prefs.setBool('isSetupComplete', true);
 
-  // await _saveQRData("${_nameController.text},${_regController.text},${_instaController.text}");
-  // Navigator.pushReplacementNamed(context, '/home_page');
- }
+    // Future<void> _saveQRData(String qrData) async {
+    //   final directory = await getApplicationDocumentsDirectory();
+    //   final file = File('${directory.path}/qrdata.txt');
+    //   await file.writeAsString(qrData);
+    // }
+
+    // await _saveQRData("${_nameController.text},${_regController.text},${_instaController.text}");
+    // Navigator.pushReplacementNamed(context, '/home_page');
+  }
 }
