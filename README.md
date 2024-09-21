@@ -1,7 +1,7 @@
 
 # PookieDex
 
-Context Aware Peer Finder Network
+Context Aware Peer Finder App
 
 ## Tech Stack
 
@@ -14,7 +14,6 @@ Context Aware Peer Finder Network
 
 - Cross platform
 - Share Contacts and Profiles instantly through QR Codes
-- Cross platform
 - Contacts and Details Update with time
 - Find Peer Groups based on Context Aware ML models
 For example, if you're looking for someone who's interested into Front End Development, what do you do?
@@ -45,6 +44,8 @@ git clone https://github.com/IM-TechieScientist/pookiedex.git
 
 - Additional Browser and Web App Support
 
+- iOS Support
+
 - Add more features
 
 - Skill Classifiers using AI/ML
@@ -54,7 +55,7 @@ git clone https://github.com/IM-TechieScientist/pookiedex.git
 - Friendship Goals - 
     Upgrades when you feel more connected to a friend, as a pokemon evolves.
 
-- Class Schedule Tracking
+- Class Schedule Tracking - Integration with VITTY [ if yall like it :) ]
 
 
 ## Authors
