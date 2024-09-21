@@ -22,14 +22,16 @@ class _SetupPageState extends State<SetupPage> {
   final TextEditingController _nameController = TextEditingController();
   final TextEditingController _regController = TextEditingController();
   final TextEditingController _instaController = TextEditingController();
+  final TextEditingController _bioController = TextEditingController();
 
-Future<void> addUserToFirebase(String emailID, String name, String regNumber, String instaID) async {
+Future<void> addUserToFirebase(String emailID, String name, String regNumber, String instaID,String bio) async {
   FirebaseFirestore firestore = FirebaseFirestore.instance;
 
   await firestore.collection('users').doc(emailID).set({
     'name': name,
     'registration_number': regNumber,
-    'instaID': instaID
+    'instaID': instaID,
+    'bio':bio
   });
 }
 
@@ -56,6 +58,10 @@ Future<void> addUserToFirebase(String emailID, String name, String regNumber, St
               controller: _instaController,
               decoration: InputDecoration(labelText: "Instagram ID"),
             ),
+            TextField(
+              controller: _bioController,
+              decoration: InputDecoration(labelText: "Enter Bio"),
+            ),
             SizedBox(height: 20),
             ElevatedButton(
               onPressed: () async {
@@ -73,7 +79,7 @@ Future<void> addUserToFirebase(String emailID, String name, String regNumber, St
                       _regController.text, _instaController.text);
                 } else {
                   dbHelper.insertmyData(widget.emailID,_nameController.text,
-                      _regController.text, _instaController.text);
+                      _regController.text, _instaController.text,_bioController.text);
 
                   // Mark the setup as complete
                   dbHelper.setSetupComplete(true);
@@ -95,7 +101,7 @@ Future<void> addUserToFirebase(String emailID, String name, String regNumber, St
                 );
                 // widget.onGenerateQR(qrData);
                 ConnectPage(qrData: qrData);
-                addUserToFirebase(widget.emailID, _nameController.text, _regController.text, _instaController.text);
+                addUserToFirebase(widget.emailID, _nameController.text, _regController.text, _instaController.text,_bioController.text);
 //                 final db = FirebaseFirestore.instance;
 //                 final user = <String, dynamic>{
 //                   "name": _nameController.text,

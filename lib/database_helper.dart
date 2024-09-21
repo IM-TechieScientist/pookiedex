@@ -49,7 +49,8 @@ class DatabaseHelper {
       emailID TEXT,
       name TEXT,
       reg_number TEXT,
-      insta_id TEXT
+      insta_id TEXT,
+      bio TEXT
     )
   ''');
 
@@ -165,7 +166,7 @@ Future<int> updateQRData(String name, String regNumber, String instaID) async {
   });
 }
 // Insert QR data into the friends table
-  Future<void> insertmyData(String email,String name, String regNumber, String instaID) async {
+  Future<void> insertmyData(String email,String name, String regNumber, String instaID, String bio ) async {
     final db = await database;
       try {
     await db.insert(
@@ -175,6 +176,7 @@ Future<int> updateQRData(String name, String regNumber, String instaID) async {
         'reg_number': regNumber,
         'insta_id': instaID,
         'emailID': email,
+        'bio':bio,
       },
       conflictAlgorithm: ConflictAlgorithm.replace, // Replaces existing entry if same email exists
     );
