@@ -42,7 +42,7 @@ class _MyAppState extends State<MyApp> {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      title: 'Conditional Navigation App',
+      title: 'PookieDex',
       theme: FlexThemeData.dark(scheme: FlexScheme.deepOrangeM3),
       home: FutureBuilder<bool>(
         future: _checkSetupStatus(),

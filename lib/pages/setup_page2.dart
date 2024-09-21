@@ -26,7 +26,7 @@ class _SetupPageState extends State<SetupPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Setup"),
+        title: Text("Setup Profile"),
         // backgroundColor: Color.fromARGB(255, 207, 85, 85),
       ),
       body: Padding(

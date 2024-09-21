@@ -113,7 +113,7 @@ class _SetupPage1State extends State<SetupPage1> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Setup Page 1'),
+        title: Text('Login with VIT Mail'),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
