@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "493568095420",
+    "project_id": "pookiedex-bbe35",
+    "storage_bucket": "pookiedex-bbe35.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:493568095420:android:c17bba973a472d21874cb9",
+        "android_client_info": {
+          "package_name": "com.example.pookied"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAJ1DGk2SDeyjKnY_fdnPgqt-IYaE5RvDo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -7,9 +7,15 @@ import 'package:pookiedex_connect/pages/setup_page1.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:io';
 import 'package:pookiedex_connect/database_helper.dart';
-import 'package:pookiedex_connect/theme.dart';
+// import 'package:pookiedex_connect/theme.dart';
 import 'package:flex_color_scheme/flex_color_scheme.dart';
-void main() {
+import 'package:pookiedex_connect/firebase_options.dart';
+import 'package:firebase_core/firebase_core.dart';
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
   runApp(MyApp());
 }
 
