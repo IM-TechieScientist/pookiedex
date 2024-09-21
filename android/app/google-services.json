@@ -12,7 +12,12 @@
           "package_name": "com.example.pookied"
         }
       },
-      "oauth_client": [],
+      "oauth_client": [
+        {
+          "client_id": "493568095420-0bt5vhimgaq8a7cfhms4booccgbuj5o3.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
       "api_key": [
         {
           "current_key": "AIzaSyAJ1DGk2SDeyjKnY_fdnPgqt-IYaE5RvDo"
@@ -20,7 +25,63 @@
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": []
+          "other_platform_oauth_client": [
+            {
+              "client_id": "493568095420-0bt5vhimgaq8a7cfhms4booccgbuj5o3.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "493568095420-vf07ffdgfa9oicp1ifqv043mgo8pufqr.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.pookied"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:493568095420:android:ad05e98e844711cd874cb9",
+        "android_client_info": {
+          "package_name": "com.example.pookiedex_connect"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "493568095420-t1pg88fdkpjurjs7k648oqsmp8s72bj2.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.pookiedex_connect",
+            "certificate_hash": "b31d832da706c88bae76fc4214fb395b792739e4"
+          }
+        },
+        {
+          "client_id": "493568095420-0bt5vhimgaq8a7cfhms4booccgbuj5o3.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAJ1DGk2SDeyjKnY_fdnPgqt-IYaE5RvDo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "493568095420-0bt5vhimgaq8a7cfhms4booccgbuj5o3.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "493568095420-vf07ffdgfa9oicp1ifqv043mgo8pufqr.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.pookied"
+              }
+            }
+          ]
         }
       }
     }

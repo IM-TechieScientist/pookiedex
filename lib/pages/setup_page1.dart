@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:path/path.dart';
 import 'package:pookiedex_connect/pages/setup_page2.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:sign_in_button/sign_in_button.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 
 class SetupPage1 extends StatefulWidget {
   @override
@@ -11,17 +13,26 @@ class SetupPage1 extends StatefulWidget {
 class _SetupPage1State extends State<SetupPage1> {
   String emailID = '';
   final FirebaseAuth _auth = FirebaseAuth.instance;
-
   User? _user;
-
-  final TextEditingController _controller = TextEditingController();
   
+  bool _isAuthorized = false; // has granted permissions?
+  final TextEditingController _controller = TextEditingController();
+  static const List<String> scopes = <String>[
+  'email',
+];
+
+final GoogleSignIn _googleSignIn = GoogleSignIn(
+  // Optional clientId
+  // clientId: 'your-client_id.apps.googleusercontent.com',
+  scopes: scopes,
+);
+
   Widget _googleSignInButton() {
     return Center(
         child: SizedBox(
             height: 50,
             child: SignInButton(Buttons.google,
-                text: "Sign In With Google", onPressed: _handleGoogleSignIn)));
+                text: "Sign In With Google", onPressed: _handleSignIn)));
   }
 
   Widget _userInfo() {
@@ -44,15 +55,33 @@ class _SetupPage1State extends State<SetupPage1> {
       ),
     );
   }
+Future<void> _handleSignIn() async {
+  try {
+    GoogleSignInAccount? _currentUser = await _googleSignIn.signIn();
+    String email= _currentUser!.email;
+    print(email);
+    //[a-zA-]@vitstudent.ac.in
 
-  void _handleGoogleSignIn() {
-    try {
-      GoogleAuthProvider _googleAuthProvider = GoogleAuthProvider();
-      _auth.signInWithProvider(_googleAuthProvider);
-    } catch (error) {
-      print(error);
+    String checker = "@vitstudent.ac.in";
+
+    if(email.contains(checker)==false){
+      _auth.signOut();
+    }else{
+      _navigateToSetupPage2();
     }
+  } catch (error) {
+    print(error);
   }
+
+}
+  // void _handleGoogleSignIn() {
+  //   try {
+  //     GoogleAuthProvider _googleAuthProvider = GoogleAuthProvider();
+  //     _auth.signInWithProvider(_googleAuthProvider);
+  //   } catch (error) {
+  //     print(error);
+  //   }
+  // }
   void _navigateToSetupPage2() {
     setState(() {
       emailID = _controller.text;
