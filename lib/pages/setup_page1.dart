@@ -88,7 +88,7 @@ class _SetupPage1State extends State<SetupPage1> {
             SnackBar(content: Text("Please use a valid VIT email")),
           );
         } else {
-          _navigateToSetupPage2();
+          _navigateToSetupPage2(email);
         }
       }
     } catch (error) {
@@ -99,9 +99,9 @@ class _SetupPage1State extends State<SetupPage1> {
     }
   }
 
-  void _navigateToSetupPage2() {
+  void _navigateToSetupPage2(String email) {
     setState(() {
-      emailID = _controller.text;
+      emailID = email;
     });
     Navigator.push(
       context,
@@ -127,7 +127,7 @@ class _SetupPage1State extends State<SetupPage1> {
             ),
             SizedBox(height: 20),
             ElevatedButton(
-              onPressed: _navigateToSetupPage2,
+              onPressed: () => _navigateToSetupPage2(_controller.text),
               child: Text('Next'),
             ),
             SizedBox(height: 20),

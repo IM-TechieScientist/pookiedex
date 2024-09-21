@@ -4,6 +4,7 @@ import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
 // import 'dart:io';
 // import 'package:path_provider/path_provider.dart';
 import 'package:pookiedex_connect/database_helper.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class ConnectPage extends StatefulWidget {
   final String qrData;
@@ -19,10 +20,37 @@ class _ConnectPageState extends State<ConnectPage> {
     String scannedData = '';
   // final String qrData;
 
+  Future<void> fetchUserDetailsFromFirebase(String emailID) async {
+    FirebaseFirestore firestore = FirebaseFirestore.instance;
+    var usersCollection = firestore.collection('users');
+    DocumentSnapshot<Map<String, dynamic>> userDoc = await usersCollection.doc(emailID).get();
+    print("User Doc: $userDoc emailID: $emailID");
+    if (userDoc.exists) {
+      // Assuming the fields in Firestore are: name, registration_number, instaID
+      String name = userDoc.get('name');
+      String regNumber = userDoc.get('registration_number');
+      String instaID = userDoc.get('instaID');
+
+      // Save these details to SQLite
+      await DatabaseHelper().insertQRData(name, regNumber, instaID,widget.qrData);
+
+      print("User Data saved locally: Name: $name, Reg Number: $regNumber, InstaID: $instaID");
+                // Optionally, show a confirmation message
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(content: Text('QR data saved to friends list!')),
+          );
+    } else {
+      print("User not found in Firebase.");
+                ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(content: Text('Invalid QR code format!')),
+          );
+    }
+  }
   // ConnectPage({required this.qrData});
 
   @override
   Widget build(BuildContext context) {
+    String _qrCode='';
     return Scaffold(
       appBar: AppBar(
         title: Text("Connect"),
@@ -37,36 +65,40 @@ class _ConnectPageState extends State<ConnectPage> {
               onPressed: () async {
                 String qrCode = await FlutterBarcodeScanner.scanBarcode(
                     "#ff6666", "Cancel", true, ScanMode.QR);
-                if (qrCode != '-1') {
-                  // Directory appDocDir = await getApplicationDocumentsDirectory();
-                  // String appDocPath = appDocDir.path;
-                  // File file = File('$appDocPath/friends.csv');
-                  // await file.writeAsString('$scanResult\n', mode: FileMode.append);
-                  // print(scanResult);
-                  List<String> qrFields = qrCode.split(",");
+        //         if (qrCode != '-1') {
+        //           // Directory appDocDir = await getApplicationDocumentsDirectory();
+        //           // String appDocPath = appDocDir.path;
+        //           // File file = File('$appDocPath/friends.csv');
+        //           // await file.writeAsString('$scanResult\n', mode: FileMode.append);
+        //           // print(scanResult);
+        //           List<String> qrFields = qrCode.split(",");
 
-        if (qrFields.length == 3) {
-          String name = qrFields[0];
-          String regNumber = qrFields[1];
-          String instaID = qrFields[2];
+        // if (qrFields.length == 3) {
+        //   String name = qrFields[0];
+        //   String regNumber = qrFields[1];
+        //   String instaID = qrFields[2];
 
-          // Insert scanned data into friends table
-          DatabaseHelper dbHelper = DatabaseHelper();
-          await dbHelper.insertFriend(name, regNumber, instaID);
+        //   // Insert scanned data into friends table
+        //   DatabaseHelper dbHelper = DatabaseHelper();
+        //   await dbHelper.insertFriend(name, regNumber, instaID);
 
-          setState(() {
-            scannedData = qrCode;
-          });
+        //   setState(() {
+        //     scannedData = qrCode;
+        //   });
 
-          // Optionally, show a confirmation message
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(content: Text('QR data saved to friends list!')),
-          );
-        } else {
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(content: Text('Invalid QR code format!')),
-          );
-        }}
+
+        // } else {
+
+        // }}
+        
+            if (qrCode != '-1') {  // If not canceled
+      setState(() {
+        _qrCode = qrCode; // This is the emailID now
+      });
+
+      // Fetch user details from Firebase using emailID
+      await fetchUserDetailsFromFirebase(qrCode);
+    }
       
 
               

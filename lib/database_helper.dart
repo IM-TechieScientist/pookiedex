@@ -35,14 +35,23 @@ class DatabaseHelper {
     ''');
 
     // Table for QR data
-    await db.execute('''
-      CREATE TABLE qr_data(
-        id INTEGER PRIMARY KEY AUTOINCREMENT,
-        name TEXT,
-        reg_number TEXT,
-        insta_id TEXT
-      )
-    ''');
+    // await db.execute('''
+    //   CREATE TABLE qr_data(
+    //     id INTEGER PRIMARY KEY AUTOINCREMENT,
+    //     name TEXT,
+    //     reg_number TEXT,
+    //     insta_id TEXT
+    //   )
+    // ''');
+      await db.execute('''
+    CREATE TABLE qr_data(
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      emailID TEXT,
+      name TEXT,
+      reg_number TEXT,
+      insta_id TEXT
+    )
+  ''');
 
     // New table for Friends
     await db.execute('''
@@ -50,7 +59,8 @@ class DatabaseHelper {
         id INTEGER PRIMARY KEY AUTOINCREMENT,
         name TEXT,
         reg_number TEXT,
-        insta_id TEXT
+        insta_id TEXT,
+        email TEXT
       )
     ''');
         // Insert sample data for first-time setup
@@ -76,17 +86,35 @@ class DatabaseHelper {
   }
 
 
-  Future<void>insertQRData(String name, String regNumber, String instaID) async {
+  // Future<void>insertQRData(String name, String regNumber, String instaID) async {
+  //   final db = await database;
+  //   await db.insert(
+  //     'qr_data',
+  //     {
+  //       'name': name,
+  //       'reg_number': regNumber,
+  //       'insta_id': instaID
+  //     },
+  //     conflictAlgorithm: ConflictAlgorithm.replace,
+  //   );
+  // }
+    Future<void> insertQRData(String name, String regNumber, String instaID, String emailID) async {
     final db = await database;
+      try {
     await db.insert(
-      'qr_data',
+      'friends',
       {
         'name': name,
         'reg_number': regNumber,
-        'insta_id': instaID
+        'insta_id': instaID,
+        'email': emailID,
       },
-      conflictAlgorithm: ConflictAlgorithm.replace,
+      conflictAlgorithm: ConflictAlgorithm.replace, // Replaces existing entry if same email exists
     );
+    print("Data successfully inserted into SQLite");
+  } catch (e) {
+    print("Error inserting data into SQLite: $e");
+  }
   }
     Future<List<Map<String, dynamic>>> getQRData() async {
     final db = await database;
@@ -137,17 +165,23 @@ Future<int> updateQRData(String name, String regNumber, String instaID) async {
   });
 }
 // Insert QR data into the friends table
-  Future<void> insertFriend(String name, String regNumber, String instaID) async {
+  Future<void> insertmyData(String email,String name, String regNumber, String instaID) async {
     final db = await database;
+      try {
     await db.insert(
-      'friends',
+      'qr_data',
       {
         'name': name,
         'reg_number': regNumber,
         'insta_id': instaID,
+        'emailID': email,
       },
-      conflictAlgorithm: ConflictAlgorithm.replace,
+      conflictAlgorithm: ConflictAlgorithm.replace, // Replaces existing entry if same email exists
     );
+    print("Data successfully inserted into SQLite");
+  } catch (e) {
+    print("Error inserting data into SQLite: $e");
+  }
   }
 
   // Retrieve all friends from the friends table

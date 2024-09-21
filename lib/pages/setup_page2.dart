@@ -23,6 +23,16 @@ class _SetupPageState extends State<SetupPage> {
   final TextEditingController _regController = TextEditingController();
   final TextEditingController _instaController = TextEditingController();
 
+Future<void> addUserToFirebase(String emailID, String name, String regNumber, String instaID) async {
+  FirebaseFirestore firestore = FirebaseFirestore.instance;
+
+  await firestore.collection('users').doc(emailID).set({
+    'name': name,
+    'registration_number': regNumber,
+    'instaID': instaID
+  });
+}
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -51,18 +61,18 @@ class _SetupPageState extends State<SetupPage> {
               onPressed: () async {
                 FocusScope.of(context).unfocus();
 
-                String qrData =
-                    "${_nameController.text},${_regController.text},${_instaController.text}";
+                String qrData = widget.emailID;
+                    // "${_nameController.text},${_regController.text},${_instaController.text}";
                 setState(() {
-                  qrData =
-                      "${_nameController.text},${_regController.text},${_instaController.text}";
+                  qrData =widget.emailID;
+                      // "${_nameController.text},${_regController.text},${_instaController.text}";
                 });
                 DatabaseHelper dbHelper = DatabaseHelper();
                 if (await dbHelper.isSetupComplete() == true) {
                   dbHelper.updateQRData(_nameController.text,
                       _regController.text, _instaController.text);
                 } else {
-                  dbHelper.insertQRData(_nameController.text,
+                  dbHelper.insertmyData(widget.emailID,_nameController.text,
                       _regController.text, _instaController.text);
 
                   // Mark the setup as complete
@@ -85,16 +95,17 @@ class _SetupPageState extends State<SetupPage> {
                 );
                 // widget.onGenerateQR(qrData);
                 ConnectPage(qrData: qrData);
-                final db = FirebaseFirestore.instance;
-                final user = <String, dynamic>{
-                  "name": _nameController.text,
-                  "regno": _regController.text,
-                  "insta": _instaController.text
-                };
+                addUserToFirebase(widget.emailID, _nameController.text, _regController.text, _instaController.text);
+//                 final db = FirebaseFirestore.instance;
+//                 final user = <String, dynamic>{
+//                   "name": _nameController.text,
+//                   "regno": _regController.text,
+//                   "insta": _instaController.text
+//                 };
 
-// Add a new document with a generated ID
-                db.collection("users").add(user).then((DocumentReference doc) =>
-                    print('DocumentSnapshot added with ID: ${doc.id}'));
+// // Add a new document with a generated ID
+//                 db.collection("users").add(user).then((DocumentReference doc) =>
+//                     print('DocumentSnapshot added with ID: ${doc.id}'));
               },
               child: Text("Save Data"),
             ),
