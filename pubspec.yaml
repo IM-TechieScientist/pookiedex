@@ -21,6 +21,9 @@ dependencies:
   cloud_firestore: ^5.4.2
   sign_in_button: ^3.2.0
   google_sign_in: ^6.2.1
+  flutter_gemini: ^2.0.5
+  url_launcher: ^6.3.0
+  external_app_launcher: ^4.0.0
 dev_dependencies:
   flutter_test:
     sdk: flutter

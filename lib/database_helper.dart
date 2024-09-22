@@ -62,6 +62,7 @@ class DatabaseHelper {
         reg_number TEXT,
         insta_id TEXT,
         bio TEXT,
+        note TEXT,
         email TEXT
       )
     ''');
@@ -73,6 +74,7 @@ class DatabaseHelper {
         'reg_number': '2XXXXXXXX',
         'insta_id': 'goated',
         'bio':'You will never know the lore',
+        'note':'Legendary',
         'email':'smt@example.com'
       },
       conflictAlgorithm: ConflictAlgorithm.replace,
@@ -85,6 +87,7 @@ class DatabaseHelper {
         'reg_number': '2XXXXXXXX',
         'insta_id': 'goated',
         'bio':'You will never know the lore',
+        'note':'Legendary',
         'email':'smt@example.com'
       },
       conflictAlgorithm: ConflictAlgorithm.replace,
@@ -104,7 +107,7 @@ class DatabaseHelper {
   //     conflictAlgorithm: ConflictAlgorithm.replace,
   //   );
   // }
-    Future<void> insertQRData(String name, String regNumber, String instaID, String bio,String emailID) async {
+    Future<void> insertQRData(String name, String regNumber, String instaID, String bio, String emailID, {String note = ""}) async {
     final db = await database;
       try {
     await db.insert(
@@ -113,7 +116,8 @@ class DatabaseHelper {
         'name': name,
         'reg_number': regNumber,
         'insta_id': instaID,
-        'bio':bio,
+        'bio': bio,
+        'note': note,
         'email': emailID,
       },
       conflictAlgorithm: ConflictAlgorithm.replace, // Replaces existing entry if same email exists
@@ -122,6 +126,21 @@ class DatabaseHelper {
   } catch (e) {
     print("Error inserting data into SQLite: $e");
   }
+  }
+
+  Future<void> updateNoteByEmail(String email, String note) async {
+    final db = await database;
+    try {
+      await db.update(
+        'friends',
+        {'note': note},
+        where: 'email = ?',
+        whereArgs: [email],
+      );
+      print("Note successfully updated in SQLite");
+    } catch (e) {
+      print("Error updating note in SQLite: $e");
+    }
   }
     Future<List<Map<String, dynamic>>> getQRData() async {
     final db = await database;
